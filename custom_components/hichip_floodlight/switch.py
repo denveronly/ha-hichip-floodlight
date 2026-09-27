@@ -27,6 +27,7 @@ async def async_setup_entry(
         cmd_off=bytes.fromhex(profile["cmd_off"]),
         cmd_auto=bytes.fromhex(profile["cmd_auto"]),
     )
+    await hass.async_add_executor_job(client.start)
     async_add_entities([FloodlightSwitch(entry, client)])
 
 
@@ -42,6 +43,9 @@ class FloodlightSwitch(SwitchEntity):
         self._attr_unique_id = f"{entry.entry_id}_floodlight"
         self._attr_is_on = False
         self._attr_available = True
+
+    async def async_will_remove_from_hass(self) -> None:
+        await self.hass.async_add_executor_job(self._client.stop)
 
     async def async_turn_on(self, **kwargs) -> None:
         await self._send("on", True)
