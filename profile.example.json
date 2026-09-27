@@ -1,0 +1,14 @@
+{
+  "uid": "<20-byte PPPP UID as hex>",
+  "setup": [
+    "<login msg hex>",
+    "<login msg hex>",
+    "<0x4179 hex>",
+    "<0x4191 hex>",
+    "<0x4191 hex>",
+    "<0x1001 hex>"
+  ],
+  "cmd_on": "<0x4190 on payload hex>",
+  "cmd_off": "<0x4190 off payload hex>",
+  "cmd_auto": "<0x4190 auto payload hex>"
+}

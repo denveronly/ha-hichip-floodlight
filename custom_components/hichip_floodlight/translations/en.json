@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HiChip Floodlight",
+        "description": "Local control for a GF-L300 style camera floodlight.",
+        "data": {
+          "name": "Name",
+          "host": "Camera IP address"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach the camera on the LAN.",
+      "profile_missing": "Place hichip_floodlight_profile.json in your config folder (see profile.example.json)."
+    },
+    "abort": {
+      "already_configured": "This camera is already configured."
+    }
+  }
+}
