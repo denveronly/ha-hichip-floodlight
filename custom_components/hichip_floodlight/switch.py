@@ -6,6 +6,7 @@ import logging
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import CONF_HOST, CONF_NAME, DOMAIN
@@ -36,13 +37,21 @@ class FloodlightSwitch(SwitchEntity):
 
     _attr_icon = "mdi:light-flood-down"
     _attr_should_poll = False
+    _attr_has_entity_name = True
+    _attr_name = None  # entity takes the device (camera) name
 
     def __init__(self, entry: ConfigEntry, client: HiChipFloodlight) -> None:
         self._client = client
-        self._attr_name = entry.data[CONF_NAME]
         self._attr_unique_id = f"{entry.entry_id}_floodlight"
         self._attr_is_on = False
         self._attr_available = True
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry.entry_id)},
+            name=entry.data[CONF_NAME],
+            manufacturer="HiChip",
+            model="GF-L300 floodlight camera",
+            configuration_url=None,
+        )
 
     async def async_will_remove_from_hass(self) -> None:
         await self.hass.async_add_executor_job(self._client.stop)
